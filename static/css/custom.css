@@ -1,0 +1,27 @@
+body,
+html {
+}
+#nav-left {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 400px;
+    min-height: 100%;
+    border-right: 1px solid #989898;
+    background: #e0e0e0;
+}
+
+#nav-middle {
+    margin-left: 420px;
+    background: #ffffff;
+}
+
+#nav-left .topic {
+    margin: 0;
+    padding: 3px 10px;
+    box-shadow: 1px 0 3px #b8b8b8;
+}
+
+#nav-left .topic:hover {
+    background: #cfcfcf;
+}

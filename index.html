@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <title>UI Test</title>
+        <link rel="stylesheet" href="static/css/bootstrap.css" type="text/css" media="screen" charset="utf-8">
+        <link rel="stylesheet" href="static/css/custom.css" type="text/css" media="screen" charset="utf-8">
+
+        <script src="/static/js/jquery.js" type="text/javascript" charset="utf-8"></script>
+        <script src="/static/js/underscore.js" type="text/javascript" charset="utf-8"></script>
+        <script src="/static/js/backbone.js" type="text/javascript" charset="utf-8"></script>
+        <script src="/static/js/handlebars.js" type="text/javascript" charset="utf-8"></script>
+
+        <script src="/static/js/app/init.js" type="text/javascript" charset="utf-8"></script>
+        <script src="/static/js/app/models.js" type="text/javascript" charset="utf-8"></script>
+        <script src="/static/js/app/collections.js" type="text/javascript" charset="utf-8"></script>
+        <script src="/static/js/app/views.js" type="text/javascript" charset="utf-8"></script>
+        <script src="/static/js/app/routers.js" type="text/javascript" charset="utf-8"></script>
+    </head>
+    <body>
+        <div id="nav-left">
+            foo
+        </div>
+        <div class="container" id="nav-middle">
+            <div class="row">
+                <div class="span12">
+                    bar
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" charset="utf-8">
+            $(function () {
+                App.init({
+                    el: {
+                        left: '#nav-left',
+                        middle: '#nav-middle'
+                    }
+                });     
+            });
+        </script>
+    </body>
+
+    <script id="template-topics" type="text/x-handlebars-template">
+        <ul class="unstyled"></ul>
+    </script>
+    <script id="template-topic" type="text/x-handlebars-template">
+        {{#with model}}
+            <h3>{{name}}</h3>
+            {{created}}
+            &bull; {{user.username}}
+            &bull; {{views}}
+        {{/with}}
+    </script>
+</html>
