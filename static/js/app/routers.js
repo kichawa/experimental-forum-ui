@@ -4,7 +4,7 @@ App.router.Main = App.Router.extend({
 
     routes: {
         "":                 "index",
-        "/":                 "index"
+        "topic/:topicId/": "topic"
     },
 
 
@@ -13,17 +13,30 @@ App.router.Main = App.Router.extend({
         if (!c) {
             c = new App.collection.Topics();
             App.state.topicsView = new App.view.Topics({
-                el: $(App.init.options.el.left),
                 collection: c
             });
+            $(App.init.options.el.left).append(App.state.topicsView.el),
             App.state.topicsView.render();
         }
 
         return c;
     },
 
+    topicsPrepare: function () {
+        if (!App.state.topic) {
+            this.topics().fetch();
+        } else {
+            this.topics();
+        }
+    },
+
     index: function () {
-        this.topics().fetch();
+        this.topicsPrepare()
+    },
+
+    topic: function (topicId) {
+        this.topicsPrepare()
+        var t = new App.model.Topic
     }
 
 });

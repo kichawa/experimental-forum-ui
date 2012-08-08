@@ -4,7 +4,8 @@ window.App = window.App || {
     model: {},
     collection: {},
     view: {},
-    router: {}
+    router: {},
+    routerInstance: {}
 };
 
 App.api = {
@@ -15,7 +16,7 @@ App.Model = Backbone.Model.extend({
 });
 
 App.Collection = Backbone.Collection.extend({
-    
+
     parse: function (o) {
         return o.objects;
     }
@@ -58,11 +59,15 @@ App.template = function (name) {
 
 App.init = function (options) {
     App.init.options = options;
-    App.history = Backbone.history = new Backbone.History({pushState: true});
+    App.history = Backbone.history = new Backbone.History();
 
-    _.each(App.router, function (r) {
-        new r();
+    $(options.el.middle).css({
+        width: $(document).width() - $(options.el.left).width() - 20
     });
 
-    App.history.start();
+    _.each(App.router, function (r, name) {
+        App.routerInstance[name] = new r();
+    });
+
+    App.history.start(); //{pushState: true});
 }

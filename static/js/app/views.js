@@ -42,11 +42,17 @@ App.view.Topic = App.View.extend({
 
     topicDetails: function (e) {
         e ? e.preventDefault() : null;
-        console.log(this.model.get('resource_uri'));
+        var uri = "topic/" + this.model.id + '/';
+        App.routerInstance.Main.navigate(uri, {trigger: true});
     }
 
 
 });
 
 
+App.view.TopicDetail = App.View.extend({
+});
 
+
+App.View.Post = App.View.extend({
+});

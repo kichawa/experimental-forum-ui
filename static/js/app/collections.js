@@ -9,3 +9,14 @@ App.collection.Topics = App.Collection.extend({
     }
 
 });
+
+
+App.collection.Posts = App.Collection.extend({
+
+    model: App.model.Post,
+
+    url: function () {
+        return App.api.urlRoot + 'post?format=json';
+    }
+
+});

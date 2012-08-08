@@ -19,14 +19,8 @@
     </head>
     <body>
         <div id="nav-left">
-            foo
         </div>
-        <div class="container" id="nav-middle">
-            <div class="row">
-                <div class="span12">
-                    bar
-                </div>
-            </div>
+        <div id="nav-middle">
         </div>
         <script type="text/javascript" charset="utf-8">
             $(function () {
@@ -35,13 +29,17 @@
                         left: '#nav-left',
                         middle: '#nav-middle'
                     }
-                });     
+                });
             });
         </script>
     </body>
 
     <script id="template-topics" type="text/x-handlebars-template">
-        <ul class="unstyled"></ul>
+        <div class="scrollbox">
+            <h3>Top</h3>
+            <hr>
+            <ul class="unstyled"></ul>
+        </div>
     </script>
     <script id="template-topic" type="text/x-handlebars-template">
         {{#with model}}
