@@ -1,6 +1,7 @@
 import urllib
 import json
 import os
+import sys
 
 import bottle
 
@@ -31,4 +32,14 @@ def proxy(path):
     return CACHE[url]
 
 
-bottle.run(host='localhost', port=8080)
+
+def main():
+    if len(sys.argv) == 2:
+        host, port = sys.argv[1].split(':')
+        port = int(port)
+    else:
+        host, port = 'localhost', 8080
+    bottle.run(host=host, port=port)
+
+if __name__ == '__main__':
+    main()
