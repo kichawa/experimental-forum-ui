@@ -9,6 +9,7 @@
         <script src="/static/js/jquery.js" type="text/javascript" charset="utf-8"></script>
         <script src="/static/js/underscore.js" type="text/javascript" charset="utf-8"></script>
         <script src="/static/js/backbone.js" type="text/javascript" charset="utf-8"></script>
+        <script src="/static/js/date.js" type="text/javascript" charset="utf-8"></script>
         <script src="/static/js/handlebars.js" type="text/javascript" charset="utf-8"></script>
 
         <script src="/static/js/app/init.js" type="text/javascript" charset="utf-8"></script>
@@ -22,6 +23,8 @@
         </div>
         <div id="nav-middle">
         </div>
+
+
         <script type="text/javascript" charset="utf-8">
             $(function () {
                 App.init({
@@ -33,6 +36,9 @@
             });
         </script>
     </body>
+
+
+
 
     <script id="template-topics" type="text/x-handlebars-template">
         <div class="scrollbox">
@@ -47,6 +53,31 @@
             {{created}}
             &bull; {{user.username}}
             &bull; {{views}}
+        {{/with}}
+    </script>
+    <script id="template-posts" type="text/x-handlebars-template">
+        {{#with model}}
+            <h1>{{name}}</h1>
+        {{/with}}
+        <div class="posts-list"></div>
+    </script>
+    <script id="template-post" type="text/x-handlebars-template">
+        {{#with model}}
+            <div class="header">
+                <a href="javascript://">
+                    {{#if user.username}}
+                        {{user.username}}
+                    {{else}}
+                        {{user.first_name}}
+                        {{user.last_name}}
+                    {{/if}}
+                </a>
+                &bull;
+                {{date created "MM:HH dd-mm-yyyy"}}
+            </div>
+            <div class="content">
+                {{safe body_html}}
+            </div>
         {{/with}}
     </script>
 </html>

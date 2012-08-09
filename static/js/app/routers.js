@@ -1,5 +1,3 @@
-App.state = {};
-
 App.router.Main = App.Router.extend({
 
     routes: {
@@ -8,35 +6,23 @@ App.router.Main = App.Router.extend({
     },
 
 
-    topics: function () {
-        var c = App.state.topics;
-        if (!c) {
-            c = new App.collection.Topics();
-            App.state.topicsView = new App.view.Topics({
-                collection: c
-            });
-            $(App.init.options.el.left).append(App.state.topicsView.el),
-            App.state.topicsView.render();
-        }
-
-        return c;
-    },
-
-    topicsPrepare: function () {
-        if (!App.state.topic) {
-            this.topics().fetch();
-        } else {
-            this.topics();
-        }
-    },
-
     index: function () {
-        this.topicsPrepare()
     },
 
     topic: function (topicId) {
-        this.topicsPrepare()
-        var t = new App.model.Topic
+        var t = App.state.topics.collection.get(topicId);
+        if (! t) {
+            t = new App.model.Topic({id: topicId});
+            t.fetch();
+        }
+        var posts = t.posts();
+        var view = new App.view.Posts({
+            model: t,
+            collection: posts,
+            el: $(App.init.options.el.middle)
+        });
+        posts.fetch();
+        view.render();
     }
 
 });

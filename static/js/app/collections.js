@@ -16,7 +16,11 @@ App.collection.Posts = App.Collection.extend({
     model: App.model.Post,
 
     url: function () {
-        return App.api.urlRoot + 'post?format=json';
+        var uri = App.api.urlRoot + 'post?format=json';
+        if (this.topic) {
+            uri += '&topic=' + this.topic.id;
+        }
+        return uri;
     }
 
 });

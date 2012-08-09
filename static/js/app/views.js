@@ -46,13 +46,38 @@ App.view.Topic = App.View.extend({
         App.routerInstance.Main.navigate(uri, {trigger: true});
     }
 
-
 });
 
 
-App.view.TopicDetail = App.View.extend({
+App.view.Posts = App.View.extend({
+
+    className: 'posts',
+
+    template: App.template('posts'),
+
+    initialize: function () {
+        _.bindAll(this, 'addOne');
+        this.model.bind('all', this.render, this);
+        this.collection.bind('reset', this.addAll, this);
+        this.addAll();
+    },
+
+    addAll: function () {
+        this.collection.each(this.addOne);
+    },
+
+    addOne: function (m) {
+        var v = new App.view.Post({model: m});
+        this.$el.find('.posts-list').append(v.render().el);
+    }
+    
 });
 
 
-App.View.Post = App.View.extend({
+App.view.Post = App.View.extend({
+
+    className: 'post-item',
+
+    template: App.template('post')
+
 });

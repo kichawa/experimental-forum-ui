@@ -9,6 +9,8 @@ BASE_URL = 'http://archlinux.pl/api/v1'
 ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
 STATIC_DIR = os.path.join(ROOT_DIR, 'static')
 
+CACHE = {}
+
 
 @bottle.route('/')
 def index():
@@ -21,9 +23,13 @@ def static(path):
 
 @bottle.route('/api/<path:re:.*>')
 def proxy(path):
-    url = os.path.join(BASE_URL, path)
-    resource = urllib.urlopen(url)
-    return json.loads(resource.read())
+    uri = bottle.request.url.split('/', 4)[-1]
+    url = os.path.join(BASE_URL, uri)
+    print url
+    if url not in CACHE:
+        resource = urllib.urlopen(url)
+        CACHE[url] = json.loads(resource.read())
+    return CACHE[url]
 
 
 bottle.run(host='localhost', port=8080)

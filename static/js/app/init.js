@@ -61,8 +61,19 @@ App.init = function (options) {
     App.init.options = options;
     App.history = Backbone.history = new Backbone.History();
 
+
+    App.state = {};
+    var c = new App.collection.Topics();
+    App.state.topics = {
+        view: (new App.view.Topics({collection: c})),
+        collection: c
+    };
+    $(options.el.left).append(App.state.topics.view.render().el),
+    c.fetch();
+
+
     $(options.el.middle).css({
-        width: $(document).width() - $(options.el.left).width() - 20
+        width: $(document).width() - $(options.el.left).width() - 16
     });
 
     _.each(App.router, function (r, name) {
@@ -71,3 +82,23 @@ App.init = function (options) {
 
     App.history.start(); //{pushState: true});
 }
+
+
+Handlebars.registerHelper('safe', function(text) {
+    return new Handlebars.SafeString(text);
+});
+
+Handlebars.registerHelper('json', function(o) {
+    try {
+        return JSON.stringify(o);
+    } catch (e) {
+        return "(ERROR: cannot convert to json: " + e + ")";
+    }
+});
+
+Handlebars.registerHelper('date', function(dt, format) {
+    if (! _.isString(format)) {
+        format = "fullDate";
+    }
+    return Date.prototype.format.call(dt, format);
+});
