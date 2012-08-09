@@ -64,3 +64,8 @@ html {
 .post-item .content {
     padding: 10px 20px;
 }
+
+.loading-data {
+    margin: 40px;
+    text-align: center;
+}

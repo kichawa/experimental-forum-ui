@@ -72,6 +72,11 @@
             <h1 class="topic-title">{{name}}</h1>
         {{/with}}
         <div class="posts-list"></div>
+        {{#if loadingData}}
+            <div class="loading-data">
+                <img src="/static/img/loading.gif">
+            </div>
+        {{/if}}
     </script>
     <script id="template-post" type="text/x-handlebars-template">
         {{#with model}}

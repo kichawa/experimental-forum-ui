@@ -70,12 +70,14 @@ App.Collection = Backbone.Collection.extend({
 
 App.View = Backbone.View.extend({
 
-    render: function () {
+    render: function (ctx) {
+        ctx = ctx || {};
         var context = {
             model: this.model ? this.model.toJSON() : {},
             collection: this.collection ? this.collection.toJSON() : {},
             view: this,
         };
+        _.extend(context, ctx);
         this.$el.html(this.template(context));
         return this;
     }

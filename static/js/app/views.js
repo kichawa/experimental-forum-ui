@@ -9,10 +9,9 @@ App.view.Topics = App.View.extend({
 
     initialize: function () {
         _.bindAll(this, 'addOne');
+
         this.collection.bind('reset', this.addAll, this);
         this.collection.bind('add', this.addOne, this);
-        this.collection.bind('reset:start', this.loadingDataStart, this);
-        this.collection.bind('reset:end', this.loadingDataEnd, this);
 
         this.enableInfiniteScroll();
     },
@@ -24,19 +23,6 @@ App.view.Topics = App.View.extend({
     addOne: function (m) {
         var v = new App.view.Topic({model: m});
         this.$el.find('ul:first').append(v.render().el);
-    },
-
-    loadingDataStart: function () {
-        if (this._loadingData) {
-            return;
-        }
-        this._loadingData = true;
-        this.$el.append('<li class="loading-data">loading data</li>');
-    },
-
-    loadingDataEnd: function () {
-        this.$el.find('.loading-data').remove();
-        delete this._loadingData;
     },
 
     enableInfiniteScroll: function () {
@@ -93,8 +79,11 @@ App.view.Posts = App.View.extend({
     initialize: function () {
         _.bindAll(this, 'addOne');
         this.model.bind('all', this.render, this);
-        this.collection.bind('reset', this.addAll, this);
         this.addAll();
+
+        this.collection.bind('reset:begin', this.loadingDataStart, this);
+        this.collection.bind('reset:end', this.loadingDataEnd, this);
+        this.collection.bind('reset', this.addAll, this);
     },
 
     addAll: function () {
@@ -104,6 +93,25 @@ App.view.Posts = App.View.extend({
     addOne: function (m) {
         var v = new App.view.Post({model: m});
         this.$el.find('.posts-list').append(v.render().el);
+    },
+
+    loadingDataStart: function () {
+        if (this._loadingData) {
+            return;
+        }
+        this._loadingData = true;
+        this.render();
+    },
+
+    loadingDataEnd: function () {
+        delete this._loadingData;
+        this.render();
+    },
+
+    render: function () {
+        App.View.prototype.render.call(this, {loadingData: !!this._loadingData});
+        this.addAll();
+        return this;
     }
     
 });
