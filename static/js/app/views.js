@@ -10,6 +10,11 @@ App.view.Topics = App.View.extend({
     initialize: function () {
         _.bindAll(this, 'addOne');
         this.collection.bind('reset', this.addAll, this);
+        this.collection.bind('add', this.addOne, this);
+        this.collection.bind('reset:start', this.loadingDataStart, this);
+        this.collection.bind('reset:end', this.loadingDataEnd, this);
+
+        this.enableInfiniteScroll();
     },
 
     addAll: function () {
@@ -19,6 +24,30 @@ App.view.Topics = App.View.extend({
     addOne: function (m) {
         var v = new App.view.Topic({model: m});
         this.$el.find('ul:first').append(v.render().el);
+    },
+
+    loadingDataStart: function () {
+        if (this._loadingData) {
+            return;
+        }
+        this._loadingData = true;
+        this.$el.append('<li class="loading-data">loading data</li>');
+    },
+
+    loadingDataEnd: function () {
+        this.$el.find('.loading-data').remove();
+        delete this._loadingData;
+    },
+
+    enableInfiniteScroll: function () {
+        var that = this;
+
+        this.$el.on('scroll', function () {
+            var pos = $(this).scrollTop() / ($(this).find('.scrollbox').height() - $(window).height());
+            if (pos > 0.8) {
+                App.state.topics.collection.fetchMore();
+            }
+        });
     }
 
 });
@@ -38,12 +67,18 @@ App.view.Topic = App.View.extend({
 
     initialize: function () {
         _.bindAll(this, 'topicDetails');
+        this.model.bind('change:active', this.render, this);
     },
 
     topicDetails: function (e) {
         e ? e.preventDefault() : null;
         var uri = "topic/" + this.model.id + '/';
         App.routerInstance.Main.navigate(uri, {trigger: true});
+    },
+
+    render: function () {
+        this.$el.toggleClass('active', !!this.model.get('active'));
+        return App.View.prototype.render.call(this);
     }
 
 });

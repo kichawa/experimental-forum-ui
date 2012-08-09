@@ -23,9 +23,8 @@ def static(path):
 
 @bottle.route('/api/<path:re:.*>')
 def proxy(path):
-    uri = bottle.request.url.split('/', 4)[-1]
+    uri = bottle.request.url.split('/', 5)[-1]
     url = os.path.join(BASE_URL, uri)
-    print url
     if url not in CACHE:
         resource = urllib.urlopen(url)
         CACHE[url] = json.loads(resource.read())

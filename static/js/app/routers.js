@@ -14,7 +14,9 @@ App.router.Main = App.Router.extend({
         if (! t) {
             t = new App.model.Topic({id: topicId});
             t.fetch();
+            App.state.topics.collection.add(t);
         }
+        t.set({active: true});
         var posts = t.posts();
         var view = new App.view.Posts({
             model: t,

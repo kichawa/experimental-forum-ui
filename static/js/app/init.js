@@ -9,16 +9,61 @@ window.App = window.App || {
 };
 
 App.api = {
-    urlRoot: 'http://localhost:8080/api/'
+    urlRoot: 'http://localhost:8080/api/v1/'
 };
 
 App.Model = Backbone.Model.extend({
+
+    fetch: function (o) {
+        o = o || {};
+        var that = this;
+        var success = o.success || $.noop;;
+        var error = o.error || $.noop;
+
+        o.success = function (c, r) {
+            that.trigger('reset:success');
+            that.trigger('reset:end');
+            return success(c, r);
+        };
+
+        o.error = function (c, r) {
+            that.trigger('reset:error');
+            that.trigger('reset:end');
+            return error(c, r);
+        };
+
+        this.trigger('reset:begin');
+        return Backbone.Model.prototype.fetch.call(this, o);
+    }
+
 });
 
 App.Collection = Backbone.Collection.extend({
 
     parse: function (o) {
         return o.objects;
+    },
+
+    fetch: function (o) {
+        o = o || {};
+        var that = this;
+        var success = o.success || $.noop;;
+        var error = o.error || $.noop;
+
+        o.success = function (c, r) {
+            that.trigger('reset:success');
+            that.trigger('reset:end');
+            return success(c, r);
+        };
+
+        o.error = function (c, r) {
+            that.trigger('reset:error');
+            that.trigger('reset:end');
+            return error(c, r);
+        };
+
+        this.trigger('reset:begin');
+        return Backbone.Collection.prototype.fetch.call(this, o);
     }
 
 });

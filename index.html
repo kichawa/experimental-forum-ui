@@ -22,6 +22,16 @@
         <div id="nav-left">
         </div>
         <div id="nav-middle">
+            <div class="alert alert-info" style="margin: 30px;">
+                <h4 class="alert-heading">
+                    Welcome good sir!
+                </h4>
+                <p>
+                    Welcome to <strong>experimental</strong> forum interface.
+                    For more info <a href="https://github.com/husio/experimental-forum-ui">
+                    check the git repository</a>.
+                </p>
+            </div>
         </div>
 
 
@@ -42,22 +52,24 @@
 
     <script id="template-topics" type="text/x-handlebars-template">
         <div class="scrollbox">
-            <h3>Top</h3>
-            <hr>
             <ul class="unstyled"></ul>
         </div>
     </script>
     <script id="template-topic" type="text/x-handlebars-template">
         {{#with model}}
             <h3>{{name}}</h3>
-            {{created}}
-            &bull; {{user.username}}
-            &bull; {{views}}
+            {{user.username}}
+            &bull; 
+            {{post_count}} posts
+            &bull; 
+            {{views}} views
+            &bull; 
+            {{date created "dd-mm-yyyy"}}
         {{/with}}
     </script>
     <script id="template-posts" type="text/x-handlebars-template">
         {{#with model}}
-            <h1>{{name}}</h1>
+            <h1 class="topic-title">{{name}}</h1>
         {{/with}}
         <div class="posts-list"></div>
     </script>
