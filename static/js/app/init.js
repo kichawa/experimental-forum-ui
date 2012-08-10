@@ -9,7 +9,7 @@ window.App = window.App || {
 };
 
 App.api = {
-    urlRoot: 'http://localhost:8080/api/v1/'
+    urlRoot: 'http://' + document.location.host + '/api/v1/'
 };
 
 App.Model = Backbone.Model.extend({
