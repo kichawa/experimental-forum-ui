@@ -147,5 +147,5 @@ Handlebars.registerHelper('date', function(dt, format) {
     if (! _.isString(format)) {
         format = "fullDate";
     }
-    return Date.prototype.format.call(dt, format);
+    return Date.prototype.format.call(dt, dt, format);
 });

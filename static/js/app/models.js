@@ -10,6 +10,11 @@ App.model.Topic = App.Model.extend({
         var posts = new App.collection.Posts();
         posts.topic = this;
         return posts;
+    },
+
+    parse: function (raw) {
+        raw.created = new Date(raw.created);
+        return raw;
     }
 
 });

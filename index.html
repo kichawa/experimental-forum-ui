@@ -56,16 +56,18 @@
         </div>
     </script>
     <script id="template-topic" type="text/x-handlebars-template">
-        {{#with model}}
-            <h3>{{name}}</h3>
-            {{user.username}}
-            &bull; 
-            {{post_count}} posts
-            &bull; 
-            {{views}} views
-            &bull; 
-            {{date created "dd-mm-yyyy"}}
-        {{/with}}
+        <div style="font-size:10px">
+            {{#with model}}
+                <h5>{{name}}</h5>
+                {{user.username}}
+                &bull;
+                {{post_count}} posts
+                &bull;
+                {{views}} views
+                &bull;
+                {{date created "dd-mm-yyyy"}}
+            {{/with}}
+        </div>
     </script>
     <script id="template-posts" type="text/x-handlebars-template">
         {{#with model}}
